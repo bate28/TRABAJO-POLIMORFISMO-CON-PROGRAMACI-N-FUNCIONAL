@@ -21,10 +21,15 @@ public class Controlador {
         this.repositorioCocina = repositorioCocina;
     }
 
-    // Punto 1: nombres de los 12 cocineros en una sola linea separados por coma
+    @GetMapping("/cocineros")
+    public String cocineros(Model model) {
+        model.addAttribute("cocineros", repositorioCocina.getCocineros());
+        return "cocineros";
+    }
+
     @GetMapping("/peticion1")
     public String peticion1(Model model) {
-        String salida = repositorioCocina.getPlato().stream()
+        String salida = repositorioCocina.getCocineros().stream()
                 .map(IDefinitiva::getNombre)
                 .collect(Collectors.joining(", "));
 
@@ -32,10 +37,9 @@ public class Controlador {
         return "punto1";
     }
 
-    // Punto 2: estadisticas del tamano de la lista de platos de los 12 cocineros
     @GetMapping("/peticion2")
     public String peticion2(Model model) {
-        DoubleSummaryStatistics estadisticas = repositorioCocina.getPlato().stream()
+        DoubleSummaryStatistics estadisticas = repositorioCocina.getCocineros().stream()
                 .collect(Collectors.summarizingDouble(cocinero -> cocinero.getPlato().size()));
 
         model.addAttribute("conteo", estadisticas.getCount());
@@ -46,11 +50,9 @@ public class Controlador {
         return "punto2";
     }
 
-    // Punto 3: una lista con TODOS los platos de los 12 cocineros,
-    // y de ella otra lista solo con el nombre (String) de cada plato
     @GetMapping("/peticion3")
     public String peticion3(Model model) {
-        List<Plato> todosLosPlatos = repositorioCocina.getPlato().stream()
+        List<Plato> todosLosPlatos = repositorioCocina.getCocineros().stream()
                 .flatMap(cocinero -> cocinero.getPlato().stream())
                 .toList();
 
@@ -63,43 +65,38 @@ public class Controlador {
         return "punto3";
     }
 
-//    // Punto 4: consultas con anyMatch() y noneMatch()
-//    @GetMapping("/peticion4")
-//    public String peticion4(Model model) {
-//        List<IDefinitiva> cocineros = repositorioCocina.getPlato();
-//
-//        // Hay algun cocinero sin platos?
-//        Boolean sinPlatos = cocineros.stream()
-//                .anyMatch(cocinero -> cocinero.getPlato().isEmpty());
-//
-//        // Hay algun cocinero con mas de 3 platos?
-//        Boolean masDeTres = cocineros.stream()
-//                .anyMatch(cocinero -> cocinero.getPlato().size() > 3);
-//
-//        // Ningun plato (de todos los cocineros) tarda mas de 90 minutos?
-//        Boolean ningunoMasDe90 = cocineros.stream()
-//                .flatMap(cocinero -> cocinero.getPlato().stream())
-//                .noneMatch(plato -> plato.getTiempoPreparacion() > 90);
-//
-//        model.addAttribute("sinPlatos", sinPlatos);
-//        model.addAttribute("masDeTres", masDeTres);
-//        model.addAttribute("ningunoMasDe90", ningunoMasDe90);
-//        return "punto4";
-//    }
-//
-//    // Punto 5: de la lista de todos los platos, el que tiene mayor tiempoPreparacion (Integer)
-//    @GetMapping("/peticion5")
-//    public String peticion5(Model model) {
-//        List<Plato> todosLosPlatos = cocinaRepository.obtenerCocineros().stream()
-//                .flatMap(cocinero -> cocinero.getPlatos().stream())
-//                .toList();
-//
-//        Plato platoMasLargo = todosLosPlatos.stream()
-//                .max(Comparator.comparing(Plato::getTiempoPreparacion))
-//                .orElse(null);
-//
-//        model.addAttribute("todosLosPlatos", todosLosPlatos);
-//        model.addAttribute("platoMasLargo", platoMasLargo);
-//        return "punto5";
-//    }
+    @GetMapping("/peticion4")
+    public String peticion4(Model model) {
+        List<IDefinitiva> cocineros = repositorioCocina.getCocineros();
+
+        Boolean sinPlatos = cocineros.stream()
+                .anyMatch(cocinero -> cocinero.getPlato().isEmpty());
+
+        Boolean masDeTres = cocineros.stream()
+                .anyMatch(cocinero -> cocinero.getPlato().size() > 3);
+
+        Boolean ningunoMasDe60 = cocineros.stream()
+                .flatMap(cocinero -> cocinero.getPlato().stream())
+                .noneMatch(plato -> plato.getTiempoMinutos() > 60);
+
+        model.addAttribute("sinPlatos", sinPlatos);
+        model.addAttribute("masDeTres", masDeTres);
+        model.addAttribute("ningunoMasDe60", ningunoMasDe60);
+        return "punto4";
+    }
+
+    @GetMapping("/peticion5")
+    public String peticion5(Model model) {
+        List<Plato> todosLosPlatos = repositorioCocina.getCocineros().stream()
+                .flatMap(cocinero -> cocinero.getPlato().stream())
+                .toList();
+
+        Plato platoMasLargo = todosLosPlatos.stream()
+                .max(Comparator.comparing(Plato::getTiempoMinutos))
+                .orElse(null);
+
+        model.addAttribute("todosLosPlatos", todosLosPlatos);
+        model.addAttribute("platoMasLargo", platoMasLargo);
+        return "punto5";
+    }
 }

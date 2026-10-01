@@ -3,52 +3,57 @@ package cocina2.cocina2.Model;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Novato implements IDefinitiva{
+public class Novato implements IDefinitiva {
 
-    List<Plato> plato;
-    String nombre;
+    private List<Plato> plato;
+    private String nombre;
 
-    public Novato(List<Plato> plato){
+    public Novato(List<Plato> plato) {
         this.plato = plato;
         this.nombre = "Novato";
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
+    @Override
     public List<Plato> getPlato() {
         return plato;
     }
 
     @Override
-    public String Hornear(List<Plato> platos) {
-        if(platos == null || platos.isEmpty()){
-            return "No hay platos para hornear.";
+    public String getNombre() {
+        return nombre;
+    }
+
+    @Override
+    public String preparar(List<Plato> platos) {
+        if (platos == null || platos.isEmpty()) {
+            return "El novato no tiene platos para preparar.";
+        }
+
+        String preparando = platos.stream()
+                .map(plato -> plato.getNombre() + " (" + (plato.getTiempoMinutos() * 2) + " min)")
+                .collect(Collectors.joining(", "));
+        return "El novato mira al chef y prepara: " + preparando + ".";
+    }
+
+    @Override
+    public String hornear(List<Plato> platos) {
+        if (platos == null || platos.isEmpty()) {
+            return "El novato no tiene platos para hornear.";
         }
         String horneando = platos.stream()
-                .map(plato -> "horneando: " + plato.getNombre())
-                .collect(Collectors.joining(","));
-        return "El novato mira al chef " + horneando + " el plato en el horno.";
+                .map(plato -> plato.getNombre())
+                .collect(Collectors.joining(", "));
+        return "El novato mira al chef hornear: " + horneando + ".";
     }
+
     @Override
-    public String Preparar(List<Plato> platos) {
-        if(platos == null || platos.isEmpty()){
-            return "No hay platos para preparar.";
-        }
-        String preparando = platos.stream()
-                .map(plato -> "preparando: " + plato.getNombre())
-                .collect(Collectors.joining(","));
-        return "El novato mira al chef " + preparando + getPlato() + " en el plato.";
-    }
-    @Override
-    public String Servir(List<Plato> platos) {
-        if(platos == null || platos.isEmpty()){
-            return "No hay platos para servir.";
+    public String servir(List<Plato> platos) {
+        if (platos == null || platos.isEmpty()) {
+            return "El novato no tiene platos para servir.";
         }
         String sirviendo = platos.stream()
-                .map(plato -> "sirviendo: " + plato.getNombre())
-                .collect(Collectors.joining(","));
-        return "El novato mira al chef " + sirviendo + " en el plato.";
+                .map(plato -> plato.getNombre() + " a la mesa " + plato.getMesa())
+                .collect(Collectors.joining(", "));
+        return "El novato sirve con cuidado " + platos.size() + " plato(s): " + sirviendo + ".";
     }
 }

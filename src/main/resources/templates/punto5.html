@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Punto 5</title></head>
+<body>
+    <h1>Punto 5: plato con mayor tiempo de preparacion</h1>
+    <p th:text="'Platos revisados: ' + ${todosLosPlatos.size()}"></p>
+    <p th:if="${platoMasLargo != null}"
+       th:text="'El plato que mas tarda es ' + ${platoMasLargo.nombre} + ' con ' + ${platoMasLargo.tiempoMinutos} + ' minutos'"></p>
+    <p th:if="${platoMasLargo == null}">No hay platos.</p>
+</body>
+</html>

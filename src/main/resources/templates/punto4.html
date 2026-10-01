@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Punto 4</title></head>
+<body>
+    <h1>Punto 4: anyMatch y noneMatch</h1>
+    <p th:text="'anyMatch - Hay algun cocinero sin platos?: ' + ${sinPlatos}"></p>
+    <p th:text="'anyMatch - Hay algun cocinero con mas de 3 platos?: ' + ${masDeTres}"></p>
+    <p th:text="'noneMatch - Ningun plato tarda mas de 60 minutos?: ' + ${ningunoMasDe60}"></p>
+    </body>
+</html>

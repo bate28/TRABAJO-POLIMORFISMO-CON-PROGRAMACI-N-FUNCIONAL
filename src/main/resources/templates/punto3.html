@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="UTF-8"><title>Punto 3</title></head>
+<body>
+    <h1>Punto 3: todos los platos de los 12 cocineros</h1>
+    <p th:text="'Total de platos: ' + ${todosLosPlatos.size()}"></p>
+    <ul>
+        <li th:each="plato : ${todosLosPlatos}" th:text="${plato}"></li>
+    </ul>
+    <h2>Lista de nombres (atributo String) de esos platos</h2>
+    <ul>
+        <li th:each="nombre : ${nombresPlatos}" th:text="${nombre}"></li>
+    </ul>
+</body>
+</html>
