@@ -1,8 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Punto 1</title></head>
+<head><meta charset="UTF-8"><title>Punto 1</title>
+<style>body{font-family:sans-serif;margin:24px}table{border-collapse:collapse;margin:8px 0}td,th{border:1px solid #999;padding:4px 8px}th{background:#eee}</style>
+</head>
 <body>
-    <h1>Punto 1: nombres de los 12 cocineros</h1>
-    <p th:text="${salida}"></p>
+    <h1>Punto 1: los 5 platos, el Stack y el Menu</h1>
+    <h2>Stack con los 5 platos (tamano: <span th:text="${pilaPlatos.size()}"></span>)</h2>
+    <table>
+        <tr><th>Nombre</th><th>Precio</th><th>Tiempo (min)</th><th>EnumPlato</th><th>Categoria</th><th>Conteo</th></tr>
+        <tr th:each="plato : ${pilaPlatos}">
+            <td th:text="${plato.nombre}"></td>
+            <td th:text="${plato.precio}"></td>
+            <td th:text="${plato.tiempoPreparacion}"></td>
+            <td th:text="${plato.tipo}"></td>
+            <td th:text="${plato.categoria}"></td>
+            <td th:text="${plato.conteo}"></td>
+        </tr>
+    </table>
+    <h2>Menu</h2>
+    <p th:text="'Nombre: ' + ${menu.nombre} + ' | Dia: ' + ${menu.dia}"></p>
+    <p th:text="'EnumPlato: ' + ${menu.tipo} + ' | Categoria: ' + ${menu.categoria}"></p>
+    <p th:text="'Platos en el Deque: ' + ${menu.platos.size()}"></p>
+    <table>
+        <tr><th>Nombre</th><th>Precio</th><th>Tiempo (min)</th><th>EnumPlato</th><th>Categoria</th><th>Conteo</th></tr>
+        <tr th:each="plato : ${menu.platos}">
+            <td th:text="${plato.nombre}"></td>
+            <td th:text="${plato.precio}"></td>
+            <td th:text="${plato.tiempoPreparacion}"></td>
+            <td th:text="${plato.tipo}"></td>
+            <td th:text="${plato.categoria}"></td>
+            <td th:text="${plato.conteo}"></td>
+        </tr>
+    </table>
 </body>
 </html>

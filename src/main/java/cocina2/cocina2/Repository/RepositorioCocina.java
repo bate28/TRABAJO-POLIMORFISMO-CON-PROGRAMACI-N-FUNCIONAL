@@ -1,41 +1,59 @@
 package cocina2.cocina2.Repository;
 
-import cocina2.cocina2.Model.*;
+import cocina2.cocina2.Model.Categoria;
+import cocina2.cocina2.Model.EnumPlato;
+import cocina2.cocina2.Model.Menu;
+import cocina2.cocina2.Model.Plato;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 @Repository
 public class RepositorioCocina {
 
-    private final Plato ensalada  = new Plato("Ensalada", 45, "01");
-    private final Plato platano   = new Plato("Platano", 50, "02");
-    private final Plato frijoles  = new Plato("Frijoles", 45, "03");
-    private final Plato morrillo  = new Plato("Morrillo", 45, "01");
-    private final Plato cerdo     = new Plato("Cerdo", 45, "04");
-    private final Plato albondiga = new Plato("Albondigas", 45, "02");
-    private final Plato brownie   = new Plato("Brownie", 20, "03");
-    private final Plato pollo     = new Plato("Pollo", 60, "04");
+    private final Stack<Plato> pilaPlatos = new Stack<>();
+    private final Menu menu;
 
-    public List<IDefinitiva> getCocineros() {
-        List<IDefinitiva> cocineros = new ArrayList<>();
+    public RepositorioCocina() {
+        Plato carne = new Plato("Churrasco", 32000.0, 30, EnumPlato.CARNE, Categoria.GRANDE);
+        carne.Conteo(12);
+        carne.Conteo(15);
+        carne.Conteo(9);
 
-        cocineros.add(new Chef(List.of()));
-        cocineros.add(new Chef(List.of(platano)));
-        cocineros.add(new Chef(List.of(ensalada, frijoles)));
-        cocineros.add(new Chef(List.of(morrillo, ensalada, cerdo)));
+        Plato pescado = new Plato("Tilapia", 30000.0, 25, EnumPlato.PESCADO, Categoria.MEDIANO);
+        pescado.Conteo(20);
+        pescado.Conteo(18);
 
-        cocineros.add(new RobotCocina(List.of(albondiga, cerdo, morrillo, frijoles)));
-        cocineros.add(new RobotCocina(List.of(ensalada, frijoles, pollo, brownie, albondiga)));
-        cocineros.add(new RobotCocina(List.of()));
-        cocineros.add(new RobotCocina(List.of(brownie)));
+        Plato frijoles = new Plato("Pezuña", 16000.0, 20, EnumPlato.SOPA, Categoria.MEDIANO);
+        frijoles.Conteo(7);
 
-        cocineros.add(new Novato(List.of(frijoles, platano)));
-        cocineros.add(new Novato(List.of(ensalada, pollo, brownie)));
-        cocineros.add(new Novato(List.of(pollo, brownie, morrillo, cerdo)));
-        cocineros.add(new Novato(List.of(morrillo, platano, pollo, brownie, ensalada)));
+        Plato postre = new Plato("Tiramisu", 15000.0, 10, EnumPlato.POSTRE, Categoria.PEQUENO);
+        postre.Conteo(10);
+        postre.Conteo(11);
+        postre.Conteo(13);
+        postre.Conteo(8);
 
-        return cocineros;
+        Plato pasta = new Plato("Pasta con albondigas", 25000.0, 35, EnumPlato.PASTA, Categoria.MEDIANO);
+
+        pilaPlatos.push(postre);
+        pilaPlatos.push(pescado);
+        pilaPlatos.push(frijoles);
+        pilaPlatos.push(carne);
+        pilaPlatos.push(pasta);
+
+        menu = new Menu("Menu del dia", "Lunes", EnumPlato.CARNE, Categoria.GRANDE);
+        menu.agregarPlato(postre);
+        menu.agregarPlato(pescado);
+        menu.agregarPlato(frijoles);
+        menu.agregarPlato(carne);
+        menu.agregarPlato(pasta);
+    }
+
+    public Stack<Plato> getPilaPlatos() {
+        return pilaPlatos;
+    }
+
+    public Menu getMenu() {
+        return menu;
     }
 }

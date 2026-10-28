@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Punto 3</title></head>
+<head><meta charset="UTF-8"><title>Punto 3</title>
+<style>body{font-family:sans-serif;margin:24px}table{border-collapse:collapse;margin:8px 0}td,th{border:1px solid #999;padding:4px 8px}th{background:#eee}</style>
+</head>
 <body>
-    <h1>Punto 3: todos los platos de los 12 cocineros</h1>
-    <p th:text="'Total de platos: ' + ${todosLosPlatos.size()}"></p>
-    <ul>
-        <li th:each="plato : ${todosLosPlatos}" th:text="${plato}"></li>
-    </ul>
-    <h2>Lista de nombres (atributo String) de esos platos</h2>
-    <ul>
-        <li th:each="nombre : ${nombresPlatos}" th:text="${nombre}"></li>
-    </ul>
+    <h1>Punto 3: platos del Deque con EnumPlato = <span th:text="${enumBuscado}"></span></h1>
+    <p th:text="'Platos encontrados: ' + ${platosFuertes.size()}"></p>
+    <table>
+        <tr><th>Nombre</th><th>Precio</th><th>Tiempo (min)</th><th>EnumPlato</th><th>Categoria</th><th>Conteo</th></tr>
+        <tr th:each="plato : ${platosFuertes}">
+            <td th:text="${plato.nombre}"></td>
+            <td th:text="${plato.precio}"></td>
+            <td th:text="${plato.tiempoPreparacion}"></td>
+            <td th:text="${plato.tipo}"></td>
+            <td th:text="${plato.categoria}"></td>
+            <td th:text="${plato.conteo}"></td>
+        </tr>
+    </table>
 </body>
 </html>

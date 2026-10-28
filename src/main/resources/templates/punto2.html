@@ -1,12 +1,33 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><meta charset="UTF-8"><title>Punto 2</title></head>
+<head><meta charset="UTF-8"><title>Punto 2</title>
+<style>body{font-family:sans-serif;margin:24px}table{border-collapse:collapse;margin:8px 0}td,th{border:1px solid #999;padding:4px 8px}th{background:#eee}</style>
+</head>
 <body>
-    <h1>Punto 2: estadisticas de la cantidad de platos por cocinero</h1>
-    <p th:text="'Conteo (cocineros): ' + ${conteo}"></p>
-    <p th:text="'Suma total (platos): ' + ${sumatotal}"></p>
-    <p th:text="'Promedio de platos: ' + ${promedio}"></p>
-    <p th:text="'Minimo de platos: ' + ${min}"></p>
-    <p th:text="'Maximo de platos: ' + ${max}"></p>
+    <h1>Punto 2: recorrer con ListIterator e Iterator</h1>
+    <h2>ListIterator sobre el Stack de los 5 platos</h2>
+    <table>
+        <tr><th>Nombre</th><th>Precio</th><th>Tiempo (min)</th><th>EnumPlato</th><th>Categoria</th><th>Conteo</th></tr>
+        <tr th:each="plato : ${platosListIterator}">
+            <td th:text="${plato.nombre}"></td>
+            <td th:text="${plato.precio}"></td>
+            <td th:text="${plato.tiempoPreparacion}"></td>
+            <td th:text="${plato.tipo}"></td>
+            <td th:text="${plato.categoria}"></td>
+            <td th:text="${plato.conteo}"></td>
+        </tr>
+    </table>
+    <h2>Iterator sobre el Deque del menu "<span th:text="${menu.nombre}"></span>"</h2>
+    <table>
+        <tr><th>Nombre</th><th>Precio</th><th>Tiempo (min)</th><th>EnumPlato</th><th>Categoria</th><th>Conteo</th></tr>
+        <tr th:each="plato : ${platosIterator}">
+            <td th:text="${plato.nombre}"></td>
+            <td th:text="${plato.precio}"></td>
+            <td th:text="${plato.tiempoPreparacion}"></td>
+            <td th:text="${plato.tipo}"></td>
+            <td th:text="${plato.categoria}"></td>
+            <td th:text="${plato.conteo}"></td>
+        </tr>
+    </table>
 </body>
 </html>
